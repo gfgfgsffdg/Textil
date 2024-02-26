@@ -1,14 +1,34 @@
-window.onload = function() {
-  fetch('https://gist.githubusercontent.com/gfgfgsffdg/bf31eb6287541436b5fd26d91fa6014a/raw/aaf11be123d0ab296b7a5989dccb0c05b5e78a82/messages.json')
-    .then(response => response.json())
-    .then(messages => {
-      var now = new Date();
-      var onejan = new Date(now.getFullYear(), 0, 1);
-      var weekNumber = Math.ceil((((now - onejan) / 1000 / 60 / 60 / 24) + onejan.getDay() + 1) / 7);
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Device Week</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <h1>Device Week</h1>
+  <div id="week">
+    <p id="weekNumber"></p>
+  </div>
+  <script>
+    window.onload = function() {
+      fetch('backend.php')
+        .then(response => response.json())
+        .then(data => {
+          var messages = data;
 
-      var message = messages[weekNumber % 2];
+          var now = new Date();
+          var onejan = new Date(now.getFullYear(), 0, 1);
+          var weekNumber = Math.ceil((((now - onejan) / 1000 / 60 / 60 / 24) + onejan.getDay() + 1) / 7);
 
-      document.getElementById('weekNumber').innerHTML = message;
-    })
-    .catch(error => console.error('Error fetching messages:', error));
-};
+          var message = (weekNumber % 2 === 0) ? messages.evenWeekMessage : messages.oddWeekMessage;
+
+          document.getElementById('weekNumber').innerHTML = message;
+        })
+        .catch(error => {
+          console.log('Error fetching the messages:', error);
+        });
+    };
+  </script>
+</body>
+</html>
