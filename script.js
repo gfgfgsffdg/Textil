@@ -1,34 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Device Week</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-  <h1>Device Week</h1>
-  <div id="week">
-    <p id="weekNumber"></p>
-  </div>
-  <script>
-    window.onload = function() {
-      fetch('backend.php')
-        .then(response => response.json())
-        .then(data => {
-          var messages = data;
+window.onload = function() {
+  fetch('https://api.allorigins.win/raw?url=https://pastebin.com/raw/GDtuCLEn?' + Date.now())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.text();
+    })
+    .then(responseText => {
+      var jsonStartIndex = responseText.indexOf('{');
+      var jsonEndIndex = responseText.lastIndexOf('}');
+      var jsonResponse = responseText.substring(jsonStartIndex, jsonEndIndex + 1);
 
-          var now = new Date();
-          var onejan = new Date(now.getFullYear(), 0, 1);
-          var weekNumber = Math.ceil((((now - onejan) / 1000 / 60 / 60 / 24) + onejan.getDay() + 1) / 7);
+      var responseJson = JSON.parse(jsonResponse);
 
-          var message = (weekNumber % 2 === 0) ? messages.evenWeekMessage : messages.oddWeekMessage;
+      var now = new Date();
+      var onejan = new Date(now.getFullYear(), 0, 1);
+      var weekNumber = Math.ceil((((now - onejan) / 1000 / 60 / 60 / 24) + onejan.getDay() + 1) / 7);
 
-          document.getElementById('weekNumber').innerHTML = message;
-        })
-        .catch(error => {
-          console.log('Error fetching the messages:', error);
-        });
-    };
-  </script>
-</body>
-</html>
+      var message;
+      if (weekNumber % 2 === 0) {
+        message = responseJson.evenWeekMessage;
+      } else {
+        message = responseJson.oddWeekMessage;
+      }
+
+      document.getElementById('weekNumber').innerHTML = message;
+    })
+    .catch(error => console.error('Error fetching messages:', error.message));
+};
