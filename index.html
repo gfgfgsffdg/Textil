@@ -3,28 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <title>Du hast heute</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
       background-color: #4f4f4f;
       color: #000000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
     }
     
     h1 {
-      text-align: center;
+      margin-top: 0;
     }
     
-   h1 #week {
-      text-align: center;
+    #week {
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <h1> Wenn du Holzwerkstatt hast, hast du diese Woche &zwnj; </h1>
+  <h1>Wenn du Holzwerkstatt hast, hast du diese Woche:</h1>
   
   <div id="week">
     <p id="weekNumber"></p>
@@ -32,5 +31,4 @@
   
   <script src="script.js"></script>
 </body>
-
 </html>
